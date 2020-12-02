@@ -10,6 +10,7 @@ package Biblioteca;
  * @author tamar
  */
 public class Subasta {
+
     private int idSubasta;
     private int precio;
     private String descTransporte;
@@ -46,7 +47,12 @@ public class Subasta {
     }
 
     public void setDescTransporte(String descTransporte) {
-        this.descTransporte = descTransporte;
+        if (descTransporte == null || descTransporte.isEmpty() || "".equals(descTransporte)) {
+            throw new IllegalArgumentException("La descripcion del transporte esta vacia");
+        } else {
+            this.descTransporte = descTransporte;
+        }
+
     }
 
     public int getIdEnvio() {
@@ -61,6 +67,5 @@ public class Subasta {
     public String toString() {
         return "Subasta{" + "idSubasta=" + idSubasta + ", precio=" + precio + ", descTransporte=" + descTransporte + ", idEnvio=" + idEnvio + '}';
     }
-    
-    
+
 }

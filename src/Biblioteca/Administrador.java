@@ -10,6 +10,7 @@ package Biblioteca;
  * @author tamar
  */
 public class Administrador {
+
     private int idAdmin;
     private String rut;
 
@@ -38,7 +39,13 @@ public class Administrador {
      * @param rut the rut to set
      */
     public void setRut(String rut) {
-        this.rut = rut;
+
+        if (rut == null || rut.isEmpty() || "".equals(rut)) {
+            throw new IllegalArgumentException("El rut no puede estar vacio");
+        } else {
+            this.rut = rut;
+        }
+
     }
 
     public Administrador(int idAdmin, String rut) {
@@ -53,6 +60,5 @@ public class Administrador {
     public String toString() {
         return "Administrador{" + "idAdmin=" + idAdmin + ", rut=" + rut + '}';
     }
-    
-   
+
 }

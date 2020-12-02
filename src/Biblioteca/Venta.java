@@ -34,7 +34,12 @@ public class Venta {
     }
 
     public void setTipoVenta(String tipoVenta) {
-        this.tipoVenta = tipoVenta;
+        if (tipoVenta == null || tipoVenta.isEmpty() || "".equals(tipoVenta)) {
+            throw new IllegalArgumentException("El tipo de venta esta vacio");
+        } else {
+            this.tipoVenta = tipoVenta;
+        }
+        
     }
 
     @Override

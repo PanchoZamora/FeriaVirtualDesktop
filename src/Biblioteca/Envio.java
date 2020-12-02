@@ -36,7 +36,11 @@ public class Envio {
     }
 
     public void setTipoEnvio(String tipoEnvio) {
-        this.tipoEnvio = tipoEnvio;
+        if (tipoEnvio == null || tipoEnvio.isEmpty() || "".equals(tipoEnvio)) {
+            throw new IllegalArgumentException("El tipo de envio esta vacio");
+        } else {
+            this.tipoEnvio = tipoEnvio;
+        }
     }
 
     public int getIdTransp() {

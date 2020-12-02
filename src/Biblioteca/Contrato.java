@@ -10,6 +10,7 @@ package Biblioteca;
  * @author tamar
  */
 public class Contrato {
+
     private int idContrato;
     private String descripcion;
     private int idProductor;
@@ -36,7 +37,11 @@ public class Contrato {
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        if (descripcion == null || descripcion.isEmpty() || "".equals(descripcion)) {
+            throw new IllegalArgumentException("La descripcion esta vacia");
+        } else {
+            this.descripcion = descripcion;
+        }
     }
 
     public int getIdProductor() {
@@ -51,6 +56,5 @@ public class Contrato {
     public String toString() {
         return "Contrato{" + "idContrato=" + idContrato + ", descripcion=" + descripcion + ", idProductor=" + idProductor + '}';
     }
-    
-    
+
 }

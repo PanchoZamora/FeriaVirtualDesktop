@@ -10,6 +10,7 @@ package Biblioteca;
  * @author tamar
  */
 public class Boleta {
+
     private int idBoleta;
     private String detalleVenta;
     private int idProducto;
@@ -40,7 +41,12 @@ public class Boleta {
     }
 
     public void setDetalleVenta(String detalleVenta) {
-        this.detalleVenta = detalleVenta;
+        if (detalleVenta == null || detalleVenta.isEmpty() || "".equals(detalleVenta)) {
+            throw new IllegalArgumentException("El detalle de venta esta vacio");
+        } else {
+            this.detalleVenta = detalleVenta;
+        }
+
     }
 
     public int getIdProducto() {
@@ -71,6 +77,5 @@ public class Boleta {
     public String toString() {
         return "Boleta{" + "idBoleta=" + idBoleta + ", detalleVenta=" + detalleVenta + ", idProducto=" + idProducto + ", idAdmin=" + idAdmin + ", idVenta=" + idVenta + '}';
     }
-    
-    
+
 }

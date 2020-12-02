@@ -35,7 +35,11 @@ public class Consultor {
     }
 
     public void setRut(String rut) {
-        this.rut = rut;
+        if (rut == null || rut.isEmpty() || "".equals(rut)) {
+            throw new IllegalArgumentException("El rut esta vacio");
+        } else {
+            this.rut = rut;
+        }
     }
 
     @Override

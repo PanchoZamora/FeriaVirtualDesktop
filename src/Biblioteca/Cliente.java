@@ -10,6 +10,7 @@ package Biblioteca;
  * @author tamar
  */
 public class Cliente {
+
     private String rut;
     private int idCliente;
     private String tipoCliente;
@@ -28,7 +29,12 @@ public class Cliente {
     }
 
     public void setRut(String rut) {
-        this.rut = rut;
+        if (rut == null || rut.isEmpty() || "".equals(rut)) {
+            throw new IllegalArgumentException("El rut esta vacio");
+        } else {
+            this.rut = rut;
+        }
+
     }
 
     public int getIdCliente() {
@@ -51,6 +57,5 @@ public class Cliente {
     public String toString() {
         return "Cliente{" + "rut=" + rut + ", idCliente=" + idCliente + ", tipoCliente=" + tipoCliente + '}';
     }
-    
-    
+
 }

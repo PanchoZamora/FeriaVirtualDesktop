@@ -40,7 +40,11 @@ public class Usuario {
     }
 
     public void setRut(String rut) {
-        this.rut = rut;
+        if (rut == null || rut.isEmpty() || "".equals(rut)) {
+            throw new IllegalArgumentException("El rut no puede estar vacio");
+        } else {
+            this.rut = rut;
+        }
     }
 
     public String getNombre() {
@@ -48,7 +52,12 @@ public class Usuario {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre == null || nombre.isEmpty() || "".equals(nombre)) {
+            throw new IllegalArgumentException("El nombre esta vacio");
+        } else {
+            this.nombre = nombre;
+        }
+        
     }
 
     public String getApellidoPaterno() {
@@ -56,7 +65,12 @@ public class Usuario {
     }
 
     public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+        if (apellidoPaterno == null || apellidoPaterno.isEmpty() || "".equals(apellidoPaterno)) {
+            throw new IllegalArgumentException("El apellido paterno esta vacio");
+        } else {
+            this.apellidoPaterno = apellidoPaterno;
+        }
+        
     }
 
     public String getApellidoMaterno() {
@@ -64,7 +78,11 @@ public class Usuario {
     }
 
     public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+        if (apellidoMaterno == null || apellidoMaterno.isEmpty() || "".equals(apellidoMaterno)) {
+            throw new IllegalArgumentException("El apellido materno esta vacio");
+        } else {
+            this.apellidoMaterno = apellidoMaterno;
+        }  
     }
 
     public Date getFechaNac() {
@@ -80,7 +98,11 @@ public class Usuario {
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo;
+        if (correo == null || correo.isEmpty() || "".equals(correo)) {
+            throw new IllegalArgumentException("El correo esta vacio");
+        } else {
+            this.correo = correo;
+        }    
     }
 
     public String getContrasena() {
@@ -88,7 +110,11 @@ public class Usuario {
     }
 
     public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+        if (contrasena == null || contrasena.isEmpty() || "".equals(contrasena)) {
+            throw new IllegalArgumentException("La contrasena esta vacia");
+        } else {
+            this.contrasena = contrasena;
+        } 
     }
 
     public String getTipoUsuario() {
@@ -96,7 +122,12 @@ public class Usuario {
     }
 
     public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+        if (tipoUsuario == null || tipoUsuario.isEmpty() || "".equals(tipoUsuario)) {
+            throw new IllegalArgumentException("El tipo de usuario esta vacio");
+        } else {
+            this.tipoUsuario = tipoUsuario;
+        } 
+        
     }
 
     @Override

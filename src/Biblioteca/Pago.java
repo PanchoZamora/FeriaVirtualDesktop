@@ -36,7 +36,11 @@ public class Pago {
     }
 
     public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
+        if (tipoPago == null || tipoPago.isEmpty() || "".equals(tipoPago)) {
+            throw new IllegalArgumentException("El tipo pago esta vacio");
+        } else {
+            this.tipoPago = tipoPago;
+        }
     }
 
     public int getIdBoleta() {

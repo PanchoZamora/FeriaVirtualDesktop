@@ -42,7 +42,11 @@ public class Producto {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre == null || nombre.isEmpty() || "".equals(nombre)) {
+            throw new IllegalArgumentException("El nombre esta vacio");
+        } else {
+            this.nombre = nombre;
+        }
     }
 
     public int getPrecio() {
@@ -66,7 +70,11 @@ public class Producto {
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        if (descripcion == null || descripcion.isEmpty() || "".equals(descripcion)) {
+            throw new IllegalArgumentException("La descripcion esta vacia");
+        } else {
+            this.descripcion = descripcion;
+        }
     }
 
     public int getIdProductor() {
