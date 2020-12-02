@@ -8,7 +8,7 @@ package Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class Conexion {
+public class ConexionBD {
 
     private Connection conexion;
 
@@ -20,7 +20,7 @@ public class Conexion {
         this.conexion = conexion;
     }
 
-    public Conexion Conectar() throws Exception {
+    public ConexionBD Conectar() throws Exception {
         //credenciales
         //Maquina( PC CASA ): 201.239.34.154
 
