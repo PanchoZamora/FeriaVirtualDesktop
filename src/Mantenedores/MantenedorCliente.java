@@ -121,7 +121,7 @@ public class MantenedorCliente {
 
             MantenedorUsuario user = new MantenedorUsuario();
 
-            user.eliminar(u);
+            user.eliminar(u.getRut());
 
         } catch (Exception ex) {
             throw new Exception("no se puede eliminar el cliente: " + ex.getMessage());

@@ -28,7 +28,7 @@ public class MantenedorUsuario {
 
         try {
 
-            CallableStatement statement = conexion.getConexion().prepareCall("call insert_usuario(?, ?,?,?,?,?,?,?,?)");
+            CallableStatement statement = conexion.getConexion().prepareCall("call insert_usuario(?,?,?,?,?,?,?,?,?)");
 
             statement.setString(1, o.getRut());
             statement.setString(2, o.getNombre());
@@ -41,8 +41,16 @@ public class MantenedorUsuario {
             statement.registerOutParameter(9, OracleTypes.VARCHAR);
 
             statement.execute();
-
+            
+            String rut_devuelto = statement.getString(9);
+            
             statement.close();
+            
+            if(rut_devuelto != null){
+                return true;
+            }else{
+                return false;
+            }
         } catch (Exception e) {
 
             if (e.getMessage().substring(0, 9).equalsIgnoreCase("ORA-00001")) {
@@ -51,7 +59,6 @@ public class MantenedorUsuario {
                 throw new Exception("ERROR: " + e.getMessage());
             }
         }
-        return false;
     }
     
     // LISTAR ( READ )
@@ -93,7 +100,7 @@ public class MantenedorUsuario {
 
     }
     // MODIFICAR ( UPDATE )
-    public boolean modificar(Usuario user) throws Exception {
+    public void modificar(Usuario user) throws Exception {
 
         ConexionBD conexion = new ConexionBD();
         conexion.Conectar();
@@ -117,18 +124,16 @@ public class MantenedorUsuario {
         } catch (Exception ex) {
             throw new Exception("No se puede editar el usuario: " + ex.getMessage());
         }
-
-        return false;
     }
     
     // ELIMINAR (DELETE)
-    public boolean eliminar(Usuario o) throws Exception {
+    public void eliminar(String rut) throws Exception {
         try {
             ConexionBD conexion = new ConexionBD();
             conexion.Conectar();
             CallableStatement statement = conexion.getConexion().prepareCall("call delete_usuario(?)");
 
-            statement.setString(1, o.getRut());
+            statement.setString(1, rut);
 
             statement.execute();
             statement.close();
@@ -136,7 +141,6 @@ public class MantenedorUsuario {
         } catch (Exception ex) {
             throw new Exception("no se puede eliminar el usuario: " + ex.getMessage());
         }
-        return false;
     }
     
     //BUSCAR POR RUT
