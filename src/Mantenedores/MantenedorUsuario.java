@@ -7,6 +7,8 @@ package Mantenedores;
 
 import Biblioteca.Usuario;
 import Conexion.ConexionBD;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.time.ZoneId;
@@ -175,6 +177,85 @@ public class MantenedorUsuario {
             return recuperado;
         } catch (Exception e) {
             throw new Exception("No se puede obtener datos: " + e.getMessage());
+        }
+
+    }
+    
+    //VALIDAR INICIO DE SESION
+    
+    /*
+    *   SIN USAR
+    *   CONTRASEÑA SIN ENCRIPTAR AUN
+    *   
+    *   SE DEBE BORRAR LA ENCRIPTACION PARA LA CORRECTA VALIDACION
+    */
+    public int[] validarSesion(String rut, String contrasena) throws Exception {
+
+        ConexionBD conexion = new ConexionBD();
+        conexion.Conectar();
+
+        try {
+           
+            //procedimiento
+            String query = "CALL BUSCAR_USUARIO_PORRUT(?,?,?,?)";
+            CallableStatement stmt = conexion.getConexion().prepareCall(query);
+
+            stmt.setString(1, rut);
+            stmt.registerOutParameter(2, OracleTypes.LONGNVARCHAR); // rut
+            stmt.registerOutParameter(3, OracleTypes.LONGNVARCHAR); // contraseña
+            stmt.execute();
+
+            if (stmt.getString(2) == null) {
+                throw new Exception("El rut ingresado no existe");
+            }
+            // USUARIO RECUPERADO DESDE BD
+            Usuario recuperado = new Usuario();
+            recuperado.setRut(stmt.getString(1));
+
+            recuperado.setContrasena(stmt.getString(4)); // CONTRASENA
+
+            // PWD
+            String passwordToHash = contrasena;
+            String generatedPassword = null;
+            try {
+                // Create MessageDigest instance for MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                //Add password bytes to digest
+                md.update(passwordToHash.getBytes());
+                //Get the hash's bytes 
+                byte[] bytes = md.digest();
+                //This bytes[] has bytes in decimal format;
+                //Convert it to hexadecimal format
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+                //Get complete hashed password in hex format
+                generatedPassword = sb.toString();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+            // GENERATED PASWORD = CONTRASEÑA INGRESADA EN MD5
+            int[] aux = new int[2]; // variable de salida 
+            if (generatedPassword.equalsIgnoreCase(recuperado.getContrasena())) {
+
+                //return 1 = true y return id del usuario
+                aux[0] = 1;
+                //       aux[1] = recuperado.getRut();
+
+                return aux;
+            } else {
+
+                //return 0 = false y return id del usuario
+                aux[0] = 0;
+                aux[1] = 0;
+
+                return aux;
+            }
+
+        } catch (Exception ex) {
+            throw new Exception("ERROR: " + ex.getMessage());
         }
 
     }

@@ -7,6 +7,8 @@ package Conexion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConexionBD {
 
@@ -53,5 +55,13 @@ public class ConexionBD {
 
         return this;
     }
-
+    
+    public static void main(String[] args) {
+        ConexionBD conexion = new ConexionBD();
+        try {
+            conexion.Conectar();
+        } catch (Exception ex) {
+            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
