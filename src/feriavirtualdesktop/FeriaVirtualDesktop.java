@@ -7,6 +7,7 @@ package feriavirtualdesktop;
 
 import Biblioteca.Usuario;
 import Mantenedores.MantenedorUsuario;
+import Vistas.Login;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
@@ -26,7 +27,13 @@ public class FeriaVirtualDesktop {
     public static void main(String[] args) {
         // RUN PRINCIPAL
         
+        /************************************************
+         ****** LOGIN PRINCIPAL. INICIO OPERATIVO *******
+         ***********************************************/
+
         
+        Login vma = new Login();
+        vma.setVisible(true);
         
         
         

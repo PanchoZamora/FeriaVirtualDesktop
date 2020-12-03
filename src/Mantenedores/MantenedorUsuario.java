@@ -201,12 +201,17 @@ public class MantenedorUsuario {
         try {
            
             //procedimiento
-            String query = "CALL BUSCAR_USUARIO_PORRUT(?,?,?,?)";
+            String query = "CALL buscar_usuario(?,?,?,?,?,?,?,?)";
             CallableStatement stmt = conexion.getConexion().prepareCall(query);
 
             stmt.setString(1, rut);
-            stmt.registerOutParameter(2, OracleTypes.LONGNVARCHAR); // rut
-            stmt.registerOutParameter(3, OracleTypes.LONGNVARCHAR); // contraseña
+            stmt.registerOutParameter(2, OracleTypes.LONGNVARCHAR); // nombre
+            stmt.registerOutParameter(3, OracleTypes.LONGNVARCHAR); // ap paterno
+            stmt.registerOutParameter(4, OracleTypes.LONGNVARCHAR); // ap materno
+            stmt.registerOutParameter(5, OracleTypes.DATE);         // fecha_nac
+            stmt.registerOutParameter(6, OracleTypes.LONGNVARCHAR); // correo
+            stmt.registerOutParameter(7, OracleTypes.LONGNVARCHAR); // contraseña
+            stmt.registerOutParameter(8, OracleTypes.LONGNVARCHAR); // tipo usuario
             stmt.execute();
 
             if (stmt.getString(2) == null) {
@@ -214,35 +219,12 @@ public class MantenedorUsuario {
             }
             // USUARIO RECUPERADO DESDE BD
             Usuario recuperado = new Usuario();
-            recuperado.setRut(stmt.getString(1));
-
-            recuperado.setContrasena(stmt.getString(4)); // CONTRASENA
+            recuperado.setRut(rut);
+            recuperado.setContrasena(stmt.getString(7)); // CONTRASENA
 
             // PWD
-            String passwordToHash = contrasena;
-            String generatedPassword = null;
-            try {
-                // Create MessageDigest instance for MD5
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                //Add password bytes to digest
-                md.update(passwordToHash.getBytes());
-                //Get the hash's bytes 
-                byte[] bytes = md.digest();
-                //This bytes[] has bytes in decimal format;
-                //Convert it to hexadecimal format
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < bytes.length; i++) {
-                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-                }
-                //Get complete hashed password in hex format
-                generatedPassword = sb.toString();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-
-            // GENERATED PASWORD = CONTRASEÑA INGRESADA EN MD5
             int[] aux = new int[2]; // variable de salida 
-            if (generatedPassword.equalsIgnoreCase(recuperado.getContrasena())) {
+            if (contrasena.equalsIgnoreCase(recuperado.getContrasena())) {
 
                 //return 1 = true y return id del usuario
                 aux[0] = 1;
