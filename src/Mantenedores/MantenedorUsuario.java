@@ -131,6 +131,9 @@ public class MantenedorUsuario {
         try {
             ConexionBD conexion = new ConexionBD();
             conexion.Conectar();
+            
+            this.buscarUsuario(rut);
+            
             CallableStatement statement = conexion.getConexion().prepareCall("call delete_usuario(?)");
 
             statement.setString(1, rut);
@@ -139,7 +142,7 @@ public class MantenedorUsuario {
             statement.close();
 
         } catch (Exception ex) {
-            throw new Exception("no se puede eliminar el usuario: " + ex.getMessage());
+            throw new Exception(ex.getMessage());
         }
     }
     
@@ -163,7 +166,7 @@ public class MantenedorUsuario {
 
             stmt.execute();
             if(stmt.getString(2)==null){
-            throw new Exception("el rut buscado no existe");
+                throw new Exception("el rut buscado no existe");
             }
             
             Usuario recuperado = new Usuario();
@@ -180,7 +183,7 @@ public class MantenedorUsuario {
             conexion.getConexion().close();
             return recuperado;
         } catch (Exception e) {
-            throw new Exception("No se puede obtener datos: " + e.getMessage());
+            throw new Exception("Error: " + e.getMessage());
         }
 
     }

@@ -158,9 +158,11 @@ public class Login extends javax.swing.JFrame {
                     
                     usr = login.buscarUsuario(txtRut.getText());
                     
+                    /*
                     if(usr.getTipoUsuario().equalsIgnoreCase("transportista")){
                         throw new Exception("No se puede iniciar sesion con cuenta de transportista");
                     }
+                    */
                     
                     if(usr.getTipoUsuario().equalsIgnoreCase("cliente")){
                         throw new Exception("No se puede iniciar sesion con cuenta de cliente");
@@ -173,6 +175,11 @@ public class Login extends javax.swing.JFrame {
                     if(usr.getTipoUsuario().equalsIgnoreCase("productor")){
                         throw new Exception("No se puede iniciar sesion con cuenta de productor");
                     }
+                    
+                    Home hm = new Home(usr.getTipoUsuario());
+                    hm.setVisible(true);
+                    this.dispose();
+                    
                     
                 }else{
                     JOptionPane.showMessageDialog(rootPane," Contraseña Invalida");
