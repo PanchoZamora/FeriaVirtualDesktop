@@ -24,17 +24,18 @@ import javax.swing.table.DefaultTableModel;
 public class VistaMenuUsuarios extends javax.swing.JFrame {
 
     DefaultTableModel modelo_usuario = new DefaultTableModel();
+
     /**
      * Creates new form MenuUsuarios
      */
     public VistaMenuUsuarios() {
-        
+
         initComponents();
         llenarCombo();
         llenarTabla();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+
     }
 
     /**
@@ -70,6 +71,7 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -197,9 +199,21 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                 "Rut", "Nombre", "Apellido Paterno", "Apellido Materno","Fecha Nacimiento","Correo","Tipo Usuario"
             }
         ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
 
         jLabel13.setText("Usuarios Actuales");
+
+        btnEditar.setText("Editar Seleccionado");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,7 +224,12 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                 .addComponent(jLabel13)
                 .addGap(377, 377, 377))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnEditar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -219,8 +238,10 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                 .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEditar)
+                .addGap(9, 9, 9))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -307,11 +328,11 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        
+
         Usuario aux = new Usuario();
-        
+
         try {
-            
+
             aux.setRut(txtRut.getText());
             aux.setNombre(txtNombre.getText());
             aux.setApellidoPaterno(txtAppPat.getText());
@@ -321,34 +342,68 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
             aux.setCorreo(txtEmail.getText());
             aux.setContrasena(txtContrasena.getText());
             aux.setTipoUsuario(cbxTipo.getSelectedItem().toString());
-            
+
             MantenedorUsuario mantUsr = new MantenedorUsuario();
-            
+
             mantUsr.crear(aux);
-            
+
             JOptionPane.showMessageDialog(rootPane, "Usuario creado exitosamente");
             llenarTabla();
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane,e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        
+
         MantenedorUsuario mantUsr = new MantenedorUsuario();
-        
+
         try {
             mantUsr.eliminar(txtRutEliminar.getText());
-            JOptionPane.showMessageDialog(rootPane,"Eliminación Exitosa");
+            JOptionPane.showMessageDialog(rootPane, "Eliminación Exitosa");
             llenarTabla();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane,"Error al eliminar: "+ex.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Error al eliminar: " + ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+
+        if (tblUsuarios.getSelectedRow() != -1) {
+            int column = 0;
+            int row = tblUsuarios.getSelectedRow();
+            String value = tblUsuarios.getModel().getValueAt(row, column).toString();
+            String rut = value;
+            try {
+                MantenedorUsuario ma = new MantenedorUsuario();
+                Usuario usr;
+                usr = ma.buscarUsuario(rut);
+                System.out.println(usr.toString());
+                
+                VistaEditarUsuario vc = new VistaEditarUsuario(usr);
+                vc.setVisible(true);
+                
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Error : " + ex.getMessage());
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar cliente");
+        }
+
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        int row = tblUsuarios.rowAtPoint(evt.getPoint());
+        int col = tblUsuarios.columnAtPoint(evt.getPoint());        // TODO add your handling code here:
+    }//GEN-LAST:event_tblUsuariosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -388,6 +443,7 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxTipo;
@@ -429,19 +485,19 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
     }
 
     private void llenarTabla() {
-        
+
         modelo_usuario.setRowCount(0);
-        
+
         MantenedorUsuario mant = new MantenedorUsuario();
-        
+
         try {
-            
+
             modelo_usuario = (DefaultTableModel) tblUsuarios.getModel();
             tblUsuarios.setModel(modelo_usuario);
             List<Usuario> listaUsuarios = mant.listarTodo();
-            
+
             Object[] obj = new Object[7];
-            
+
             for (int i = 0; i < listaUsuarios.size(); i++) {
                 obj[0] = listaUsuarios.get(i).getRut();
                 obj[1] = listaUsuarios.get(i).getNombre();
@@ -452,9 +508,9 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                 obj[6] = listaUsuarios.get(i).getTipoUsuario();
                 modelo_usuario.addRow(obj);
             }
-            
+
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane,"Error: "+ex.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Error: " + ex.getMessage());
         }
     }
 }
