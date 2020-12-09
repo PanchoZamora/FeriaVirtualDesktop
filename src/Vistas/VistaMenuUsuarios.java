@@ -72,6 +72,7 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
         tblUsuarios = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -215,6 +216,13 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
             }
         });
 
+        btnUpdate.setText("Actualizar Tabla");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -229,7 +237,8 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnEditar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUpdate)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -240,7 +249,9 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar)
+                    .addComponent(btnUpdate))
                 .addGap(9, 9, 9))
         );
 
@@ -388,6 +399,7 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
                 VistaEditarUsuario vc = new VistaEditarUsuario(usr);
                 vc.setVisible(true);
                 
+                llenarTabla();
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(rootPane, "Error : " + ex.getMessage());
@@ -404,6 +416,11 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
         int row = tblUsuarios.rowAtPoint(evt.getPoint());
         int col = tblUsuarios.columnAtPoint(evt.getPoint());        // TODO add your handling code here:
     }//GEN-LAST:event_tblUsuariosMouseClicked
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        llenarTabla();
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -445,6 +462,7 @@ public class VistaMenuUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JLabel jLabel1;

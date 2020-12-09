@@ -187,29 +187,6 @@ public class VistaEditarUsuario extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        Usuario aux = new Usuario();
-
-        try {
-
-            aux.setRut(txtRut.getText());
-            aux.setNombre(txtNombre.getText());
-            aux.setApellidoPaterno(txtAppPat.getText());
-            aux.setApellidoMaterno(txtAppMat.getText());
-            Date fecha = new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaNac.getText());
-            aux.setFechaNac(fecha);
-            aux.setCorreo(txtEmail.getText());
-            aux.setTipoUsuario(cbxTipo.getSelectedItem().toString());
-
-            MantenedorUsuario mantUsr = new MantenedorUsuario();
-
-            mantUsr.crear(aux);
-
-            JOptionPane.showMessageDialog(rootPane, "Usuario editado exitosamente");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-        }
-        
         try {
             MantenedorUsuario mUsuario = new MantenedorUsuario();
             Usuario uIngresado = new Usuario();
@@ -219,11 +196,17 @@ public class VistaEditarUsuario extends javax.swing.JFrame {
             uIngresado.setNombre(txtNombre.getText());
             uIngresado.setApellidoMaterno(txtAppMat.getText());
             uIngresado.setApellidoPaterno(txtAppPat.getText());
-            uIngresado.setNombre(txtNombre.getText());
+            uIngresado.setContrasena(this.usr.getContrasena());
+            Date fecha = new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaNac.getText());
+            uIngresado.setFechaNac(fecha);
             uIngresado.setRut(txtRut.getText());
             uIngresado.setCorreo(txtEmail.getText());
+            uIngresado.setTipoUsuario(cbxTipo.getSelectedItem().toString());
             
             mUsuario.modificar(uIngresado);
+            
+            JOptionPane.showMessageDialog(rootPane,"Editado correctamente");
+                this.dispose();
             
         } catch (Exception ex) {
             Logger.getLogger(VistaEditarUsuario.class.getName()).log(Level.SEVERE, null, ex);
