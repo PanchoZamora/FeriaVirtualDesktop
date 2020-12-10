@@ -25,15 +25,14 @@ public class MantenedorProducto {
         conexion.Conectar();
         try {
 
-            CallableStatement statement = conexion.getConexion().prepareCall("call insert_producto(?,?,?,?,?,?,?)");
+            CallableStatement statement = conexion.getConexion().prepareCall("call insert_producto(?,?,?,?,?,?)");
 
-            statement.setInt(1, pr.getIdProducto());
-            statement.setString(2, pr.getNombre());
-            statement.setInt(3, pr.getPrecio());
-            statement.setInt(4, pr.getCantidad());
-            statement.setString(5, pr.getDescripcion());
-            statement.setInt(6, p.getIdProductor());
-            statement.registerOutParameter(7, OracleTypes.VARCHAR);
+            statement.setString(1, pr.getNombre());
+            statement.setInt(2, pr.getPrecio());
+            statement.setInt(3, pr.getCantidad());
+            statement.setString(4, pr.getDescripcion());
+            statement.setInt(5, p.getIdProductor());
+            statement.registerOutParameter(6, OracleTypes.VARCHAR);
 
             statement.execute();
             statement.close();
@@ -108,7 +107,7 @@ public class MantenedorProducto {
     }
     
     // delete
-    public boolean eliminar(Producto pr, Productor p) throws Exception {
+    public boolean eliminar(Producto pr) throws Exception {
         ConexionBD conexion = new ConexionBD();
         conexion.Conectar();
         try {
